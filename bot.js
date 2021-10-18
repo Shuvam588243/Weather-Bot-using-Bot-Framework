@@ -3,7 +3,9 @@ const validator = require('validator');
 const {FetchWeather} = require('./api/WeatherDetails');
 // const {FetchCategories} = require('./api/fetchCategories');
 const axios = require('axios');
-const {logger} = require('./Logger')
+const {logger} = require('./Logger');
+const {sendMail} = require('./Mailer');
+const otpGenerator = require('otp-generator')
 
 
 
@@ -13,6 +15,7 @@ const questions = {
     phone : "phone",
     email : "email",
     city : "city",
+    verify : "verify",
 }
 
 
@@ -71,6 +74,7 @@ class WeatherBot extends ActivityHandler{
     async UserDetails(flow,profile,context){
         let input = context.activity.text;
         let result;
+        let body = {};
         switch(flow.lastQuestionAsked){
             case questions.none : await context.sendActivity('What is Your Name ? ');
                                  flow.lastQuestionAsked = questions.name;
@@ -120,18 +124,45 @@ class WeatherBot extends ActivityHandler{
                                profile.city = result.city;
                                await context.sendActivity(`Fetching Weather Details of ${profile.city}.....`);
 
-                               let weather = await FetchWeather(profile.city);
-                               await logger.info(JSON.stringify(weather));
-                               await context.sendActivity(weather);
+                               await context.sendActivity('For getting the Result type the unique code sended to your email')
 
-                            //    await FetchCategories();
-                      
+                               const otp = await otpGenerator.generate(6, { alphabets : false, upperCase: false, specialChars: false });
+
+                               profile.otp = otp
+
+                            
+                                body.subject = 'OTP Verification',
+                                body.description = otp
+                            
+
+                            await context.sendActivity('Please Enter the OTP Here');
+                                flow.lastQuestionAsked = questions.verify;
+
+                            await sendMail(profile.email, body)
                                }
                                else
                                {
                                    await context.sendActivity(result.message)
                                }
                                break;
+         case questions.verify : 
+                                if(profile.otp === input)
+                               {
+                                let weather = await FetchWeather(profile.city);
+                               await logger.info(JSON.stringify(weather));
+                               await context.sendActivity(weather);
+
+                               
+                                   body.subject = 'Weather Result',
+                                   body.description = weather
+                               
+
+                               await sendMail(profile.email, body)
+                               }
+                               else
+                               {
+                                   context.sendActivity('Invalid OTP')
+                               }
         }
     }
 

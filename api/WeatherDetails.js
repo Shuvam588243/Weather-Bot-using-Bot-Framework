@@ -1,17 +1,11 @@
 const axios = require('axios');
 
-const path = require('path');
-const dotenv = require('dotenv');
-
-const ENV_FILE = path.join(__dirname, '.env');
-dotenv.config({ path : ENV_FILE });
-
 
 module.exports.FetchWeather = async(city) => {
 
     let weather = {};
 
-    var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=04fc7a4dafae99e95c248d7f6f4c7be2`;
+    var url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
     const result = await axios.get(url);
     console.log(result.data);
 
