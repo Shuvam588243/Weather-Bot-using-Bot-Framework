@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey('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')
+sgMail.setApiKey(process.env.SENDGRID_KEY)
 
 module.exports.sendMail = async(mail, body) => {
     const msg = {
