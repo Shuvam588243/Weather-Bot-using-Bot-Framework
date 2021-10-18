@@ -1,7 +1,9 @@
 const {ActivityHandler} = require('botbuilder');
 const validator = require('validator');
 const {FetchWeather} = require('./api/WeatherDetails');
+// const {FetchCategories} = require('./api/fetchCategories');
 const axios = require('axios');
+const {logger} = require('./Logger')
 
 
 
@@ -74,6 +76,7 @@ class WeatherBot extends ActivityHandler{
                                  flow.lastQuestionAsked = questions.name;
                                  break;
             case questions.name : result = await this.ValidateName(input);
+                                    logger.info(JSON.stringify(result));
                                  if(result.success){
                                      profile.name = result.name;
                                      await context.sendActivity(`Saving Your Name as ${profile.name}`);
@@ -118,7 +121,10 @@ class WeatherBot extends ActivityHandler{
                                await context.sendActivity(`Fetching Weather Details of ${profile.city}.....`);
 
                                let weather = await FetchWeather(profile.city);
+                               await logger.info(JSON.stringify(weather));
                                await context.sendActivity(weather);
+
+                            //    await FetchCategories();
                       
                                }
                                else
