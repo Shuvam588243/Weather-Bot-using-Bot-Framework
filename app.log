@@ -17,3 +17,19 @@
 2021-10-18T13:25:45.723Z [INFO   ]: {"success":true,"name":"Shuvam"}
 2021-10-18T13:58:45.216Z [INFO   ]: {"success":true,"name":"Shuvam Sengupta"}
 2021-10-18T13:59:58.816Z [INFO   ]: "Weather of Guwahati is Clouds and broken clouds with Min Temperature : 299.1 and Max Temperature : 299.1"
+2021-10-19T06:10:24.808Z [INFO   ]: {"success":true,"name":"shuvam sengupta"}
+2021-10-19T06:12:04.172Z [INFO   ]: "Weather of Jaipur is Haze and haze with Min Temperature : 299.77 and Max Temperature : 299.77"
+2021-10-19T06:12:17.904Z [INFO   ]: {"success":true,"name":"Vihsal"}
+2021-10-19T06:13:20.461Z [INFO   ]: "Weather of Jaipur is Haze and haze with Min Temperature : 299.77 and Max Temperature : 299.77"
+2021-10-19T06:43:49.478Z [INFO   ]: {"success":true,"name":"Shuvam Sengupta"}
+2021-10-19T06:49:42.069Z [INFO   ]: {"success":true,"name":"Shuvam Sengupta"}
+2021-10-19T06:52:19.626Z [INFO   ]: "Weather of Jaipur is Clear and clear sky with Min Temperature : 300.77 and Max Temperature : 300.77"
+2021-10-19T06:57:19.918Z [INFO   ]: {"success":true,"name":"Hemant"}
+2021-10-19T06:58:17.417Z [INFO   ]: "Weather of Jaipur is Clear and clear sky with Min Temperature : 300.77 and Max Temperature : 300.77"
+2021-10-19T06:58:29.928Z [INFO   ]: {"success":true,"name":"Hemant"}
+2021-10-20T16:30:48.838Z [INFO   ]: {"success":true,"name":"Shuvam Sengupta"}
+2021-10-20T16:32:47.448Z [INFO   ]: {"success":true,"name":"Shuvam Sengupta"}
+2021-10-20T16:33:24.548Z [INFO   ]: {"city":"Guwahati","weather":"Mist","description":"mist","max_temp":298.1,"min_temp":298.1,"lat":26.1862,"lon":91.751,"temp":298.1}
+2021-10-20T16:34:07.764Z [INFO   ]: {"success":true,"name":"Shuvam"}
+2021-10-20T16:35:29.036Z [INFO   ]: {"success":true,"name":"Shuva"}
+2021-10-20T16:38:37.097Z [INFO   ]: {"success":true,"name":"Shuvam Sengupta'"}

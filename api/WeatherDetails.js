@@ -14,7 +14,10 @@ module.exports.FetchWeather = async(city) => {
     weather.description = result.data.weather[0].description;
     weather.max_temp = result.data.main.temp_min;
     weather.min_temp = result.data.main.temp_max;
+    weather.lat = result.data.coord.lat;
+    weather.lon = result.data.coord.lon;
+    weather.temp = result.data.main.temp;
 
-    return `Weather of ${weather.city} is ${weather.weather} and ${weather.description} with Min Temperature : ${weather.min_temp} and Max Temperature : ${weather.max_temp}`
+    return weather;
 
 }

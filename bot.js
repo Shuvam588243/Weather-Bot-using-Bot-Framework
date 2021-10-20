@@ -1,12 +1,13 @@
-const {ActivityHandler} = require('botbuilder');
+const {ActivityHandler,CardFactory} = require('botbuilder');
 const validator = require('validator');
 const {FetchWeather} = require('./api/WeatherDetails');
 // const {FetchCategories} = require('./api/fetchCategories');
 const axios = require('axios');
 const {logger} = require('./Logger');
 const {sendMail} = require('./Mailer');
-const otpGenerator = require('otp-generator')
-
+const otpGenerator = require('otp-generator');
+const {addUser} = require('./DB/Dynamo');
+const {sendWeatherCard} = require('./Cards')
 
 
 const questions = {
@@ -122,6 +123,9 @@ class WeatherBot extends ActivityHandler{
                                console.log(result);
                                if(result.success){
                                profile.city = result.city;
+
+                               await addUser(profile);
+                               
                                await context.sendActivity(`Fetching Weather Details of ${profile.city}.....`);
 
                                await context.sendActivity('For getting the Result type the unique code sended to your email')
@@ -129,6 +133,7 @@ class WeatherBot extends ActivityHandler{
                                const otp = await otpGenerator.generate(6, { alphabets : false, upperCase: false, specialChars: false });
 
                                profile.otp = otp
+                               console.log(otp);
 
                             
                                 body.subject = 'OTP Verification',
@@ -149,15 +154,24 @@ class WeatherBot extends ActivityHandler{
                                 if(profile.otp === input)
                                {
                                 let weather = await FetchWeather(profile.city);
-                               await logger.info(JSON.stringify(weather));
-                               await context.sendActivity(weather);
+                                console.log(weather);
+                                // await sendWeatherCard(weather);
+                                await context.sendActivity({
+                                    attachments : [
+                                        CardFactory.adaptiveCard(sendWeatherCard(
+                                            weather
+                                        ))
+                                    ]
+                                })
+                            //    await logger.info(JSON.stringify(weather));
+                            //    await context.sendActivity(weather);
 
                                
-                                   body.subject = 'Weather Result',
-                                   body.description = weather
+                                //    body.subject = 'Weather Result',
+                                //    body.description = weather
                                
 
-                               await sendMail(profile.email, body)
+                            //    await sendMail(profile.email, body)
                                }
                                else
                                {
